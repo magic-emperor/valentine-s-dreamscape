@@ -1,79 +1,55 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-interface Heart {
+interface Particle {
   id: number;
   x: number;
   size: number;
   delay: number;
   duration: number;
   opacity: number;
+  symbol: string;
 }
 
-const FloatingHearts = () => {
-  const [hearts, setHearts] = useState<Heart[]>([]);
+const SYMBOLS = ["✦", "·", "∘", "○", "✧", "⋆"];
+
+const AmbientParticles = () => {
+  const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
-    const generated: Heart[] = Array.from({ length: 25 }, (_, i) => ({
+    const generated: Particle[] = Array.from({ length: 18 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
-      size: Math.random() * 24 + 12,
-      delay: Math.random() * 10,
-      duration: Math.random() * 8 + 8,
-      opacity: Math.random() * 0.4 + 0.1,
+      size: Math.random() * 14 + 8,
+      delay: Math.random() * 12,
+      duration: Math.random() * 12 + 10,
+      opacity: Math.random() * 0.2 + 0.05,
+      symbol: SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)],
     }));
-    setHearts(generated);
+    setParticles(generated);
   }, []);
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-      {hearts.map((heart) => (
+      {particles.map((p) => (
         <motion.div
-          key={heart.id}
-          className="absolute text-primary"
-          style={{
-            left: `${heart.x}%`,
-            fontSize: heart.size,
-            opacity: heart.opacity,
-          }}
-          initial={{ y: "110vh", rotate: 0 }}
-          animate={{
-            y: "-10vh",
-            rotate: [0, 30, -20, 15, 0],
-            x: [0, 30, -20, 40, 0],
-          }}
+          key={p.id}
+          className="absolute text-primary/30"
+          style={{ left: `${p.x}%`, fontSize: p.size, opacity: p.opacity }}
+          initial={{ y: "110vh" }}
+          animate={{ y: "-10vh", x: [0, 15, -10, 20, 0] }}
           transition={{
-            duration: heart.duration,
-            delay: heart.delay,
+            duration: p.duration,
+            delay: p.delay,
             repeat: Infinity,
             ease: "linear",
           }}
         >
-          ♥
+          {p.symbol}
         </motion.div>
-      ))}
-      {/* Sparkle particles */}
-      {Array.from({ length: 15 }).map((_, i) => (
-        <motion.div
-          key={`sparkle-${i}`}
-          className="absolute w-1 h-1 rounded-full bg-gold"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            opacity: [0, 1, 0],
-            scale: [0, 1.5, 0],
-          }}
-          transition={{
-            duration: 2 + Math.random() * 2,
-            delay: Math.random() * 5,
-            repeat: Infinity,
-          }}
-        />
       ))}
     </div>
   );
 };
 
-export default FloatingHearts;
+export default AmbientParticles;
