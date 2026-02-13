@@ -8,32 +8,23 @@
   :root {
     --background: 30 25% 97%;
     --foreground: 25 15% 15%;
-
     --card: 30 20% 94%;
     --card-foreground: 25 15% 15%;
-
     --popover: 30 25% 97%;
     --popover-foreground: 25 15% 15%;
-
     --primary: 15 45% 55%;
     --primary-foreground: 30 25% 97%;
-
     --secondary: 30 20% 90%;
     --secondary-foreground: 25 20% 30%;
-
     --muted: 30 15% 92%;
     --muted-foreground: 25 10% 50%;
-
     --accent: 35 60% 60%;
     --accent-foreground: 30 30% 10%;
-
     --destructive: 0 60% 50%;
     --destructive-foreground: 0 0% 100%;
-
     --border: 30 15% 87%;
     --input: 30 15% 87%;
     --ring: 15 45% 55%;
-
     --radius: 0.75rem;
 
     --warm: 25 30% 85%;
@@ -43,6 +34,7 @@
     --sage: 140 15% 70%;
     --clay: 20 25% 65%;
     --espresso: 25 20% 25%;
+    --rose-soft: 350 30% 75%;
 
     --sidebar-background: 30 25% 97%;
     --sidebar-foreground: 25 15% 15%;
@@ -89,8 +81,12 @@
   * {
     @apply border-border;
   }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground font-body antialiased;
+    overflow-x: hidden;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
@@ -103,40 +99,53 @@
     background-image: linear-gradient(135deg, hsl(var(--terracotta)), hsl(var(--accent)), hsl(var(--clay)));
   }
 
+  .text-gradient-rose {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--rose-soft)), hsl(var(--terracotta)), hsl(var(--accent)));
+  }
+
   .bg-gradient-soft {
     background: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--cream)) 50%, hsl(var(--warm)) 100%);
   }
 
   .bg-gradient-hero-overlay {
-    background: linear-gradient(135deg, hsl(var(--espresso) / 0.6), hsl(var(--terracotta) / 0.4), hsl(var(--espresso) / 0.5));
+    background: linear-gradient(135deg, hsl(var(--espresso) / 0.7), hsl(var(--terracotta) / 0.5), hsl(var(--espresso) / 0.6));
+  }
+
+  .bg-gradient-depth {
+    background: radial-gradient(ellipse at center, hsl(var(--cream)) 0%, hsl(var(--background)) 70%);
   }
 
   .glow-warm {
-    box-shadow: 0 0 30px hsl(var(--terracotta) / 0.15), 0 0 60px hsl(var(--accent) / 0.08);
+    box-shadow: 0 0 40px hsl(var(--terracotta) / 0.2), 0 0 80px hsl(var(--accent) / 0.1);
   }
 
-  .shimmer-gold {
-    background: linear-gradient(110deg, transparent 33%, hsl(var(--accent) / 0.2) 50%, transparent 67%);
-    background-size: 300% 100%;
-    animation: shimmer 4s infinite linear;
+  .glow-soft {
+    box-shadow: 0 8px 40px hsl(var(--foreground) / 0.08);
+  }
+
+  .card-3d {
+    transform-style: preserve-3d;
+    perspective: 1200px;
+  }
+
+  .card-3d-inner {
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .grain-overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
   }
 }
 
 @keyframes shimmer {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
-}
-
-@keyframes float-gentle {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-12px); }
-}
-
-@keyframes grain {
-  0%, 100% { transform: translate(0, 0); }
-  10% { transform: translate(-5%, -10%); }
-  30% { transform: translate(3%, -15%); }
-  50% { transform: translate(12%, 9%); }
-  70% { transform: translate(9%, 4%); }
-  90% { transform: translate(-1%, 7%); }
 }
