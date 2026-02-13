@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import ZoomScrollSection from "./ZoomScrollSection";
 
 interface GalleryImage {
   id: string;
@@ -10,24 +11,27 @@ interface GalleryImage {
 const LoveGallery = () => {
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
-
     Array.from(files).forEach((file) => {
       const reader = new FileReader();
       reader.onload = (ev) => {
-        const newImage: GalleryImage = {
-          id: Date.now().toString() + Math.random(),
-          url: ev.target?.result as string,
-          caption: file.name.replace(/\.[^.]+$/, ""),
-        };
-        setImages((prev) => [...prev, newImage]);
+        setImages((prev) => [
+          ...prev,
+          {
+            id: Date.now().toString() + Math.random(),
+            url: ev.target?.result as string,
+            caption: file.name.replace(/\.[^.]+$/, ""),
+          },
+        ]);
       };
       reader.readAsDataURL(file);
     });
+    e.target.value = "";
   };
 
   const removeImage = (id: string) => {
@@ -36,42 +40,50 @@ const LoveGallery = () => {
   };
 
   return (
-    <section id="gallery" className="py-24 px-4 relative">
+    <ZoomScrollSection className="py-32 px-4">
       <div className="max-w-6xl mx-auto">
-        <motion.h2
-          className="text-4xl md:text-5xl font-display font-bold text-center text-gradient-love mb-4"
-          initial={{ opacity: 0, y: 30 }}
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          Our Precious Moments
-        </motion.h2>
-        <motion.p
-          className="text-center text-muted-foreground font-body mb-12"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-        >
-          Upload your favorite memories together 📸
-        </motion.p>
+          <p className="text-muted-foreground font-body text-sm tracking-[0.2em] uppercase mb-4">
+            your story
+          </p>
+          <h2 className="text-5xl md:text-7xl font-display font-bold text-gradient-warm mb-6">
+            Moments
+          </h2>
+          <p className="text-muted-foreground font-body text-lg max-w-md mx-auto">
+            Upload the photos that tell your love story
+          </p>
+        </motion.div>
 
-        {/* Upload area */}
+        {/* Upload button */}
         <motion.div
-          className="mb-12 flex justify-center"
+          className="flex justify-center mb-16"
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
         >
           <motion.button
-            className="px-8 py-4 bg-primary text-primary-foreground font-display text-lg rounded-full glow-rose cursor-pointer flex items-center gap-3"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            className="group relative px-10 py-5 bg-card border border-border rounded-2xl font-body text-foreground cursor-pointer overflow-hidden"
+            whileHover={{ scale: 1.03, y: -2 }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => fileInputRef.current?.click()}
           >
-            <span className="text-2xl">📷</span>
-            Add Your Photos
+            <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <span className="relative flex items-center gap-3">
+              <motion.span
+                className="text-2xl"
+                animate={{ rotate: [0, 5, -5, 0] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                📷
+              </motion.span>
+              <span className="font-medium">Add Your Photos</span>
+            </span>
           </motion.button>
           <input
             ref={fileInputRef}
@@ -83,65 +95,69 @@ const LoveGallery = () => {
           />
         </motion.div>
 
-        {/* Gallery grid */}
+        {/* Gallery */}
         {images.length === 0 ? (
           <motion.div
-            className="text-center py-20 border-2 border-dashed border-border rounded-2xl bg-card/50"
+            className="text-center py-24 border border-dashed border-border rounded-3xl bg-card/30 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
-            <motion.div
-              className="text-6xl mb-4"
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
+            <motion.span
+              className="text-6xl block mb-4"
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
             >
-              💝
-            </motion.div>
-            <p className="text-muted-foreground font-body text-lg">
-              Your love story starts here — add your first photo!
+              ✦
+            </motion.span>
+            <p className="text-muted-foreground font-body">
+              Your memories will appear here
             </p>
           </motion.div>
         ) : (
-          <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-            layout
-          >
+          <motion.div className="columns-1 sm:columns-2 lg:columns-3 gap-5 space-y-5" layout>
             <AnimatePresence>
-              {images.map((img, index) => (
+              {images.map((img, i) => (
                 <motion.div
                   key={img.id}
-                  className="relative group cursor-pointer rounded-xl overflow-hidden shadow-lg"
-                  style={{ perspective: 800 }}
+                  className="relative break-inside-avoid group cursor-pointer rounded-2xl overflow-hidden"
+                  style={{ perspective: 1000 }}
                   layout
-                  initial={{ opacity: 0, scale: 0.6, rotateY: -30 }}
-                  animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-                  exit={{ opacity: 0, scale: 0.6, rotateY: 30 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  initial={{ opacity: 0, y: 50, rotateX: 15 }}
+                  animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                  exit={{ opacity: 0, scale: 0.8, rotateX: -15 }}
+                  transition={{ duration: 0.6, delay: i * 0.08 }}
                   whileHover={{
-                    scale: 1.05,
-                    rotateY: 5,
-                    boxShadow: "0 20px 60px hsl(348 83% 47% / 0.3)",
+                    y: -8,
+                    rotateY: hoveredId === img.id ? 3 : 0,
+                    boxShadow: "0 25px 60px hsl(var(--foreground) / 0.15)",
                   }}
+                  onHoverStart={() => setHoveredId(img.id)}
+                  onHoverEnd={() => setHoveredId(null)}
                   onClick={() => setSelectedImage(img)}
                 >
                   <img
                     src={img.url}
                     alt={img.caption}
-                    className="w-full h-64 object-cover"
+                    className="w-full object-cover rounded-2xl"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <motion.div
-                    className="absolute bottom-0 left-0 right-0 p-4 text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute inset-0 bg-gradient-to-t from-foreground/50 via-transparent to-transparent rounded-2xl"
+                    initial={{ opacity: 0 }}
+                    whileHover={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  <motion.div
+                    className="absolute bottom-0 left-0 right-0 p-5"
+                    initial={{ opacity: 0, y: 10 }}
+                    whileHover={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    <p className="font-display text-sm">{img.caption}</p>
+                    <p className="text-primary-foreground font-display text-lg">{img.caption}</p>
                   </motion.div>
                   <motion.button
-                    className="absolute top-2 right-2 w-8 h-8 rounded-full bg-primary/80 text-primary-foreground text-sm flex items-center justify-center opacity-0 group-hover:opacity-100 cursor-pointer"
+                    className="absolute top-3 right-3 w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm text-foreground text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity"
                     whileHover={{ scale: 1.2 }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      removeImage(img.id);
-                    }}
+                    onClick={(e) => { e.stopPropagation(); removeImage(img.id); }}
                   >
                     ✕
                   </motion.button>
@@ -155,7 +171,7 @@ const LoveGallery = () => {
         <AnimatePresence>
           {selectedImage && (
             <motion.div
-              className="fixed inset-0 z-50 bg-foreground/80 backdrop-blur-md flex items-center justify-center p-4 cursor-pointer"
+              className="fixed inset-0 z-50 bg-foreground/85 backdrop-blur-xl flex items-center justify-center p-6 cursor-pointer"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -164,17 +180,17 @@ const LoveGallery = () => {
               <motion.img
                 src={selectedImage.url}
                 alt={selectedImage.caption}
-                className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl"
-                initial={{ scale: 0.5, rotateY: -20 }}
-                animate={{ scale: 1, rotateY: 0 }}
-                exit={{ scale: 0.5, rotateY: 20 }}
-                transition={{ type: "spring", damping: 20 }}
+                className="max-w-full max-h-[85vh] object-contain rounded-2xl glow-soft"
+                initial={{ scale: 0.7, rotateY: -10, opacity: 0 }}
+                animate={{ scale: 1, rotateY: 0, opacity: 1 }}
+                exit={{ scale: 0.7, rotateY: 10, opacity: 0 }}
+                transition={{ type: "spring", damping: 25, stiffness: 200 }}
               />
             </motion.div>
           )}
         </AnimatePresence>
       </div>
-    </section>
+    </ZoomScrollSection>
   );
 };
 

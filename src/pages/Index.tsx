@@ -1,18 +1,20 @@
-import FloatingHearts from "@/components/FloatingHearts";
+import AmbientParticles from "@/components/AmbientParticles";
 import HeroSection from "@/components/HeroSection";
-import LoveLetterSection from "@/components/LoveLetterSection";
+import QuoteSection from "@/components/QuoteSection";
+import StoryCards from "@/components/StoryCards";
 import LoveGallery from "@/components/LoveGallery";
-import HeartCatchGame from "@/components/HeartCatchGame";
+import MemoryMatchGame from "@/components/MemoryMatchGame";
 import FooterSection from "@/components/FooterSection";
 
 const Index = () => {
   return (
-    <div className="relative min-h-screen bg-background overflow-x-hidden">
-      <FloatingHearts />
+    <div className="relative min-h-screen bg-background overflow-x-hidden" style={{ perspective: "1200px" }}>
+      <AmbientParticles />
       <HeroSection />
-      <LoveLetterSection />
+      <QuoteSection />
+      <StoryCards />
       <LoveGallery />
-      <HeartCatchGame />
+      <MemoryMatchGame />
       <FooterSection />
     </div>
   );
