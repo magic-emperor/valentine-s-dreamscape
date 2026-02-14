@@ -1,0 +1,186 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 30 25% 97%;
+    --foreground: 25 15% 15%;
+    --card: 30 20% 94%;
+    --card-foreground: 25 15% 15%;
+    --popover: 30 25% 97%;
+    --popover-foreground: 25 15% 15%;
+    --primary: 15 45% 55%;
+    --primary-foreground: 30 25% 97%;
+    --secondary: 30 20% 90%;
+    --secondary-foreground: 25 20% 30%;
+    --muted: 30 15% 92%;
+    --muted-foreground: 25 10% 50%;
+    --accent: 35 60% 60%;
+    --accent-foreground: 30 30% 10%;
+    --destructive: 0 60% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 30 15% 87%;
+    --input: 30 15% 87%;
+    --ring: 15 45% 55%;
+    --radius: 0.75rem;
+
+    --warm: 25 30% 85%;
+    --terracotta: 15 45% 55%;
+    --cream: 35 30% 95%;
+    --blush: 350 25% 85%;
+    --sage: 140 15% 70%;
+    --clay: 20 25% 65%;
+    --espresso: 25 20% 25%;
+    --rose-soft: 350 30% 75%;
+
+    --sidebar-background: 30 25% 97%;
+    --sidebar-foreground: 25 15% 15%;
+    --sidebar-primary: 15 45% 55%;
+    --sidebar-primary-foreground: 30 25% 97%;
+    --sidebar-accent: 30 20% 90%;
+    --sidebar-accent-foreground: 25 20% 30%;
+    --sidebar-border: 30 15% 87%;
+    --sidebar-ring: 15 45% 55%;
+  }
+
+  .dark {
+    --background: 25 15% 8%;
+    --foreground: 30 15% 90%;
+    --card: 25 12% 12%;
+    --card-foreground: 30 15% 90%;
+    --popover: 25 15% 8%;
+    --popover-foreground: 30 15% 90%;
+    --primary: 15 50% 60%;
+    --primary-foreground: 25 15% 8%;
+    --secondary: 25 12% 18%;
+    --secondary-foreground: 30 15% 85%;
+    --muted: 25 10% 18%;
+    --muted-foreground: 25 10% 55%;
+    --accent: 35 60% 55%;
+    --accent-foreground: 25 15% 8%;
+    --destructive: 0 60% 40%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 25 10% 20%;
+    --input: 25 10% 20%;
+    --ring: 15 50% 60%;
+    --sidebar-background: 25 15% 8%;
+    --sidebar-foreground: 30 15% 90%;
+    --sidebar-primary: 15 50% 60%;
+    --sidebar-primary-foreground: 25 15% 8%;
+    --sidebar-accent: 25 12% 18%;
+    --sidebar-accent-foreground: 30 15% 85%;
+    --sidebar-border: 25 10% 20%;
+    --sidebar-ring: 15 50% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    overflow-x: hidden;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display;
+  }
+}
+
+@layer utilities {
+  .text-gradient-warm {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(
+      135deg,
+      hsl(var(--terracotta)),
+      hsl(var(--accent)),
+      hsl(var(--clay))
+    );
+  }
+
+  .text-gradient-rose {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(
+      135deg,
+      hsl(var(--rose-soft)),
+      hsl(var(--terracotta)),
+      hsl(var(--accent))
+    );
+  }
+
+  .bg-gradient-soft {
+    background: linear-gradient(
+      180deg,
+      hsl(var(--background)) 0%,
+      hsl(var(--cream)) 50%,
+      hsl(var(--warm)) 100%
+    );
+  }
+
+  .bg-gradient-hero-overlay {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--espresso) / 0.7),
+      hsl(var(--terracotta) / 0.5),
+      hsl(var(--espresso) / 0.6)
+    );
+  }
+
+  .bg-gradient-depth {
+    background: radial-gradient(
+      ellipse at center,
+      hsl(var(--cream)) 0%,
+      hsl(var(--background)) 70%
+    );
+  }
+
+  .glow-warm {
+    box-shadow:
+      0 0 40px hsl(var(--terracotta) / 0.2),
+      0 0 80px hsl(var(--accent) / 0.1);
+  }
+
+  .glow-soft {
+    box-shadow: 0 8px 40px hsl(var(--foreground) / 0.08);
+  }
+
+  .card-3d {
+    transform-style: preserve-3d;
+    perspective: 1200px;
+  }
+
+  .card-3d-inner {
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .grain-overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
