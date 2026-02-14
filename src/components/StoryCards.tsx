@@ -9,48 +9,12 @@ interface StoryCard {
 }
 
 const storyCards: StoryCard[] = [
-  {
-    id: 1,
-    title: "Our First Meeting",
-    description:
-      "Write about how it all began — the first glance, the first words, the butterflies.",
-    icon: "✦",
-  },
-  {
-    id: 2,
-    title: "Favorite Memory",
-    description:
-      "That one moment you keep replaying — the laughter, the warmth, the feeling of home.",
-    icon: "♡",
-  },
-  {
-    id: 3,
-    title: "What I Love About You",
-    description:
-      "The little things, the big things, everything in between that makes you, you.",
-    icon: "⋆",
-  },
-  {
-    id: 4,
-    title: "Our Dreams Together",
-    description:
-      "Where we're headed, what we'll build, the adventures waiting for us.",
-    icon: "◌",
-  },
-  {
-    id: 5,
-    title: "A Promise",
-    description:
-      "Words from the heart — a commitment, a vow, something to hold onto forever.",
-    icon: "○",
-  },
-  {
-    id: 6,
-    title: "Your Note",
-    description:
-      "A blank canvas for your own words — say whatever your heart needs to say.",
-    icon: "✧",
-  },
+  { id: 1, title: "Our First Meeting", description: "Write about how it all began — the first glance, the first words, the butterflies.", icon: "✦" },
+  { id: 2, title: "Favorite Memory", description: "That one moment you keep replaying — the laughter, the warmth, the feeling of home.", icon: "♡" },
+  { id: 3, title: "What I Love About You", description: "The little things, the big things, everything in between that makes you, you.", icon: "⋆" },
+  { id: 4, title: "Our Dreams Together", description: "Where we're headed, what we'll build, the adventures waiting for us.", icon: "◌" },
+  { id: 5, title: "A Promise", description: "Words from the heart — a commitment, a vow, something to hold onto forever.", icon: "○" },
+  { id: 6, title: "Your Note", description: "A blank canvas for your own words — say whatever your heart needs to say.", icon: "✧" },
 ];
 
 const StoryCards = () => {
@@ -101,7 +65,7 @@ const StoryCards = () => {
                 transition={{ duration: 0.4, ease: "easeOut" }}
               >
                 {/* Shimmer effect on hover */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-r from-transparent via-primary/5 to-transparent bg-[length:200%_100%] animate-shimmer" />
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-r from-transparent via-primary/5 to-transparent bg-[length:200%_100%] animate-[shimmer_3s_linear_infinite]" />
 
                 {/* Icon */}
                 <motion.div

@@ -1,26 +1,27 @@
-import AmbientParticles from "./components/AmbientParticles";
-import HeroSection from "./components/HeroSection";
-import QuoteSection from "./components/QuoteSection";
-import StoryCards from "./components/StoryCards";
-import LoveGallery from "./components/LoveGallery";
-import MemoryMatchGame from "./components/MemoryMatchGame";
-import FooterSection from "./components/FooterSection";
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Index from "./pages/Index";
+import NotFound from "./pages/NotFound";
 
-const Index = () => {
-  return (
-    <div
-      className="relative min-h-screen bg-background overflow-x-hidden"
-      style={{ perspective: "1200px" }}
-    >
-      <AmbientParticles />
-      <HeroSection />
-      <QuoteSection />
-      <StoryCards />
-      <LoveGallery />
-      <MemoryMatchGame />
-      <FooterSection />
-    </div>
-  );
-};
+const queryClient = new QueryClient();
 
-export default Index;
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </TooltipProvider>
+  </QueryClientProvider>
+);
+
+export default App;

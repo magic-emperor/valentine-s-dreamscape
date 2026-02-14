@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -88,12 +88,7 @@
     @apply bg-background text-foreground font-body antialiased;
     overflow-x: hidden;
   }
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  h1, h2, h3, h4, h5, h6 {
     @apply font-display;
   }
 }
@@ -101,54 +96,28 @@
 @layer utilities {
   .text-gradient-warm {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(
-      135deg,
-      hsl(var(--terracotta)),
-      hsl(var(--accent)),
-      hsl(var(--clay))
-    );
+    background-image: linear-gradient(135deg, hsl(var(--terracotta)), hsl(var(--accent)), hsl(var(--clay)));
   }
 
   .text-gradient-rose {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(
-      135deg,
-      hsl(var(--rose-soft)),
-      hsl(var(--terracotta)),
-      hsl(var(--accent))
-    );
+    background-image: linear-gradient(135deg, hsl(var(--rose-soft)), hsl(var(--terracotta)), hsl(var(--accent)));
   }
 
   .bg-gradient-soft {
-    background: linear-gradient(
-      180deg,
-      hsl(var(--background)) 0%,
-      hsl(var(--cream)) 50%,
-      hsl(var(--warm)) 100%
-    );
+    background: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--cream)) 50%, hsl(var(--warm)) 100%);
   }
 
   .bg-gradient-hero-overlay {
-    background: linear-gradient(
-      135deg,
-      hsl(var(--espresso) / 0.7),
-      hsl(var(--terracotta) / 0.5),
-      hsl(var(--espresso) / 0.6)
-    );
+    background: linear-gradient(135deg, hsl(var(--espresso) / 0.7), hsl(var(--terracotta) / 0.5), hsl(var(--espresso) / 0.6));
   }
 
   .bg-gradient-depth {
-    background: radial-gradient(
-      ellipse at center,
-      hsl(var(--cream)) 0%,
-      hsl(var(--background)) 70%
-    );
+    background: radial-gradient(ellipse at center, hsl(var(--cream)) 0%, hsl(var(--background)) 70%);
   }
 
   .glow-warm {
-    box-shadow:
-      0 0 40px hsl(var(--terracotta) / 0.2),
-      0 0 80px hsl(var(--accent) / 0.1);
+    box-shadow: 0 0 40px hsl(var(--terracotta) / 0.2), 0 0 80px hsl(var(--accent) / 0.1);
   }
 
   .glow-soft {
@@ -177,10 +146,6 @@
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }

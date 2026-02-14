@@ -17,7 +17,6 @@ const LoveGallery = () => {
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
-
     Array.from(files).forEach((file) => {
       const reader = new FileReader();
       reader.onload = (ev) => {
@@ -32,13 +31,12 @@ const LoveGallery = () => {
       };
       reader.readAsDataURL(file);
     });
-
-    // Reset input so same file can be uploaded again
     e.target.value = "";
   };
 
   const removeImage = (id: string) => {
     setImages((prev) => prev.filter((img) => img.id !== id));
+    if (selectedImage?.id === id) setSelectedImage(null);
   };
 
   return (
@@ -116,10 +114,7 @@ const LoveGallery = () => {
             </p>
           </motion.div>
         ) : (
-          <motion.div
-            className="columns-1 sm:columns-2 lg:columns-3 gap-5 space-y-5"
-            layout
-          >
+          <motion.div className="columns-1 sm:columns-2 lg:columns-3 gap-5 space-y-5" layout>
             <AnimatePresence>
               {images.map((img, i) => (
                 <motion.div
@@ -157,16 +152,12 @@ const LoveGallery = () => {
                     whileHover={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <p className="text-primary-foreground font-display text-lg">
-                      {img.caption}
-                    </p>
+                    <p className="text-primary-foreground font-display text-lg">{img.caption}</p>
                   </motion.div>
                   <motion.button
                     className="absolute top-3 right-3 w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm text-foreground text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      removeImage(img.id);
-                    }}
+                    whileHover={{ scale: 1.2 }}
+                    onClick={(e) => { e.stopPropagation(); removeImage(img.id); }}
                   >
                     ✕
                   </motion.button>

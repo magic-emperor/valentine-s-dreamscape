@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import heroImage from "../assets/Valentine.png";
+import heroImage from "@/assets/hero-aesthetic.jpg";
 
 const HeroSection = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -11,12 +11,14 @@ const HeroSection = () => {
 
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.5]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const textY = useTransform(scrollYProgress, [0, 1], [0, 150]);
   const blur = useTransform(scrollYProgress, [0, 1], [0, 10]);
 
   return (
     <section ref={ref} className="relative h-[150vh]">
       <div className="sticky top-0 h-screen overflow-hidden">
+        {/* Background with zoom parallax */}
         <motion.div className="absolute inset-0" style={{ scale }}>
           <img
             src={heroImage}
@@ -26,11 +28,13 @@ const HeroSection = () => {
           <div className="absolute inset-0 bg-gradient-hero-overlay" />
         </motion.div>
 
+        {/* Grain overlay */}
         <div className="absolute inset-0 grain-overlay" />
 
+        {/* Content */}
         <motion.div
           className="relative z-10 h-full flex flex-col items-center justify-center px-4"
-          style={{ opacity, y: textY, filter: `blur(${blur}px)` }}
+          style={{ opacity, y: textY, filter: `blur(${blur}px)` } as any}
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
@@ -51,11 +55,7 @@ const HeroSection = () => {
               className="text-7xl md:text-9xl lg:text-[10rem] font-display font-bold text-primary-foreground leading-[0.85] mb-8"
               initial={{ opacity: 0, y: 60 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: 0.3,
-                duration: 1.2,
-                ease: [0.16, 1, 0.3, 1],
-              }}
+              transition={{ delay: 0.3, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             >
               <span className="block">Val</span>
               <motion.span
@@ -89,6 +89,7 @@ const HeroSection = () => {
             </motion.p>
           </motion.div>
 
+          {/* Scroll indicator */}
           <motion.div
             className="absolute bottom-12 left-1/2 -translate-x-1/2"
             initial={{ opacity: 0 }}
@@ -100,9 +101,7 @@ const HeroSection = () => {
               animate={{ y: [0, 8, 0] }}
               transition={{ duration: 2.5, repeat: Infinity }}
             >
-              <span className="text-primary-foreground/40 font-body text-xs tracking-widest uppercase">
-                Scroll to explore
-              </span>
+              <span className="text-primary-foreground/40 font-body text-xs tracking-widest uppercase">Scroll to explore</span>
               <div className="w-5 h-8 border border-primary-foreground/30 rounded-full flex justify-center pt-1.5">
                 <motion.div
                   className="w-1 h-2 bg-primary-foreground/50 rounded-full"

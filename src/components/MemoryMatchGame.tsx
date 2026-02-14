@@ -19,7 +19,7 @@ const MemoryMatchGame = () => {
   const [matches, setMatches] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
   const [bestScore, setBestScore] = useState(() =>
-    parseInt(localStorage.getItem("valentine-memory-best") || "999"),
+    parseInt(localStorage.getItem("valentine-memory-best") || "999")
   );
 
   const initGame = useCallback(() => {
@@ -39,10 +39,7 @@ const MemoryMatchGame = () => {
     setIsComplete(false);
   }, []);
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    initGame();
-  }, [initGame]);
+  useEffect(() => { initGame(); }, [initGame]);
 
   const handleFlip = (id: number) => {
     if (flippedCards.length >= 2) return;
@@ -50,25 +47,24 @@ const MemoryMatchGame = () => {
     if (!card || card.isFlipped || card.isMatched) return;
 
     const newCards = cards.map((c) =>
-      c.id === id ? { ...c, isFlipped: true } : c,
+      c.id === id ? { ...c, isFlipped: true } : c
     );
     setCards(newCards);
-
     const newFlipped = [...flippedCards, id];
     setFlippedCards(newFlipped);
 
     if (newFlipped.length === 2) {
       setMoves((m) => m + 1);
-      const [first, second] = newFlipped.map(
-        (fid) => newCards.find((c) => c.id === fid)!,
+      const [first, second] = newFlipped.map((fid) =>
+        newCards.find((c) => c.id === fid)!
       );
 
       if (first.pairId === second.pairId) {
         setTimeout(() => {
           setCards((prev) =>
             prev.map((c) =>
-              c.pairId === first.pairId ? { ...c, isMatched: true } : c,
-            ),
+              c.pairId === first.pairId ? { ...c, isMatched: true } : c
+            )
           );
           setMatches((m) => {
             const newM = m + 1;
@@ -83,8 +79,8 @@ const MemoryMatchGame = () => {
         setTimeout(() => {
           setCards((prev) =>
             prev.map((c) =>
-              newFlipped.includes(c.id) ? { ...c, isFlipped: false } : c,
-            ),
+              newFlipped.includes(c.id) ? { ...c, isFlipped: false } : c
+            )
           );
           setFlippedCards([]);
         }, 800);
@@ -92,10 +88,8 @@ const MemoryMatchGame = () => {
     }
   };
 
-  // Update best score when game completes
   useEffect(() => {
     if (isComplete && moves < bestScore) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setBestScore(moves);
       localStorage.setItem("valentine-memory-best", moves.toString());
     }
@@ -128,16 +122,10 @@ const MemoryMatchGame = () => {
             Moves: <span className="font-semibold text-primary">{moves}</span>
           </div>
           <div className="bg-card px-5 py-2.5 rounded-xl border border-border">
-            Matched:{" "}
-            <span className="font-semibold text-primary">
-              {matches}/{CARD_EMOJIS.length}
-            </span>
+            Matched: <span className="font-semibold text-primary">{matches}/{CARD_EMOJIS.length}</span>
           </div>
           <div className="bg-card px-5 py-2.5 rounded-xl border border-border">
-            Best:{" "}
-            <span className="font-semibold text-accent">
-              {bestScore === 999 ? "–" : bestScore}
-            </span>
+            Best: <span className="font-semibold text-accent">{bestScore === 999 ? "–" : bestScore}</span>
           </div>
         </div>
 
@@ -148,20 +136,14 @@ const MemoryMatchGame = () => {
               key={card.id}
               className="aspect-square cursor-pointer"
               style={{ perspective: 800 }}
-              whileHover={
-                !card.isFlipped && !card.isMatched ? { scale: 1.05 } : {}
-              }
-              whileTap={
-                !card.isFlipped && !card.isMatched ? { scale: 0.95 } : {}
-              }
+              whileHover={!card.isFlipped && !card.isMatched ? { scale: 1.05 } : {}}
+              whileTap={!card.isFlipped && !card.isMatched ? { scale: 0.95 } : {}}
               onClick={() => handleFlip(card.id)}
             >
               <motion.div
                 className="relative w-full h-full"
                 style={{ transformStyle: "preserve-3d" }}
-                animate={{
-                  rotateY: card.isFlipped || card.isMatched ? 180 : 0,
-                }}
+                animate={{ rotateY: card.isFlipped || card.isMatched ? 180 : 0 }}
                 transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
               >
                 {/* Front (hidden face) */}
@@ -177,6 +159,7 @@ const MemoryMatchGame = () => {
                     ✦
                   </motion.span>
                 </div>
+
                 {/* Back (emoji face) */}
                 <motion.div
                   className={`absolute inset-0 rounded-xl flex items-center justify-center text-3xl md:text-4xl border-2 ${
@@ -239,14 +222,10 @@ const MemoryMatchGame = () => {
                   Perfect Match!
                 </h3>
                 <p className="text-muted-foreground font-body mb-1">
-                  Completed in{" "}
-                  <span className="text-primary font-semibold">{moves}</span>{" "}
-                  moves
+                  Completed in <span className="text-primary font-semibold">{moves}</span> moves
                 </p>
                 {moves <= bestScore && (
-                  <p className="text-accent font-body text-sm mb-6">
-                    ✦ New best score!
-                  </p>
+                  <p className="text-accent font-body text-sm mb-6">✦ New best score!</p>
                 )}
                 <motion.button
                   className="px-8 py-3 bg-primary text-primary-foreground font-body rounded-xl cursor-pointer"
