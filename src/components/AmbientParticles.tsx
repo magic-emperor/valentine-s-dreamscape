@@ -40,7 +40,12 @@ const AmbientParticles = () => {
             left: `${p.x}%`,
             fontSize: p.size,
             opacity: p.opacity,
-            filter: p.layer === 0 ? "blur(2px)" : p.layer === 2 ? "blur(0.5px)" : "none",
+            filter:
+              p.layer === 0
+                ? "blur(2px)"
+                : p.layer === 2
+                  ? "blur(0.5px)"
+                  : "none",
           }}
           initial={{ y: "110vh" }}
           animate={{

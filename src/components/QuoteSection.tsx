@@ -36,7 +36,7 @@ const QuoteSection = () => (
         </motion.div>
 
         <blockquote className="font-display text-3xl md:text-5xl lg:text-6xl font-light text-foreground/80 leading-snug italic mb-8">
-          "Whatever our souls are made of, his and mine are the same"
+          "Whatever our souls are made of, they are the same - My LOVE(Aien)"
         </blockquote>
 
         <motion.p
@@ -46,7 +46,7 @@ const QuoteSection = () => (
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
         >
-          — Emily Brontë
+          — Faizan Khan
         </motion.p>
       </motion.div>
     </div>

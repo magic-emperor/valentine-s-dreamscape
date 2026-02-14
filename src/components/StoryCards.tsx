@@ -9,12 +9,12 @@ interface StoryCard {
 }
 
 const storyCards: StoryCard[] = [
-  { id: 1, title: "Our First Meeting", description: "Write about how it all began — the first glance, the first words, the butterflies.", icon: "✦" },
-  { id: 2, title: "Favorite Memory", description: "That one moment you keep replaying — the laughter, the warmth, the feeling of home.", icon: "♡" },
-  { id: 3, title: "What I Love About You", description: "The little things, the big things, everything in between that makes you, you.", icon: "⋆" },
-  { id: 4, title: "Our Dreams Together", description: "Where we're headed, what we'll build, the adventures waiting for us.", icon: "◌" },
-  { id: 5, title: "A Promise", description: "Words from the heart — a commitment, a vow, something to hold onto forever.", icon: "○" },
-  { id: 6, title: "Your Note", description: "A blank canvas for your own words — say whatever your heart needs to say.", icon: "✧" },
+  { id: 1, title: "Our First Meeting", description: "When I saw you walking towards me, I knew you were the one for me.", icon: "✦" },
+  { id: 2, title: "Favorite Memory", description: "The way you smiled at me, and the way you ran and hug me.", icon: "♡" },
+  { id: 3, title: "What I Love About You", description: "Your smile, the way you understand me, the way you make me laugh, the way you make me feel at peace, you.", icon: "⋆" },
+  { id: 4, title: "Our Dreams Together", description: "Let build our own world together, Travel together, and live together, and make our own memories together.", icon: "◌" },
+  { id: 5, title: "A Promise", description: "I promise to be there for you, to support you, to love you, and to be there for you always.", icon: "○" },
+  { id: 6, title: "Your Note", description: "I love you aien, I love you Sweetheart, I love you jaan, I love you Baby, I love you Mehnazz, I love you Mehnnnaaaazzzzz, I love you AAAAIIIEEEENNNN",  icon: "✧" }
 ];
 
 const StoryCards = () => {
@@ -35,7 +35,7 @@ const StoryCards = () => {
             Our Story
           </h2>
           <p className="text-muted-foreground font-body text-lg max-w-lg mx-auto">
-            Every love story deserves to be told — these cards are yours to fill
+            Every love story deserves to be told — Here are our precious memories
           </p>
         </motion.div>
 
